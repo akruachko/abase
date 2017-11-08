@@ -11,6 +11,7 @@ libraryDependencies ++= Seq(
                               cache,
                               ws,
                               javaJdbc,
+                              evolutions,
                               "org.liquibase" % "liquibase-core" % "3.5.3",
                               "org.squeryl" %% "squeryl" % "0.9.5-7",
                               "org.postgresql" % "postgresql" % "9.3-1102-jdbc4"
