@@ -1,5 +1,5 @@
 package helpers
 
-trait GeneratorIdHelper{
+object GeneratorIdHelper{
   def generatorId = java.util.UUID.randomUUID().toString.replace("-", "")
 }

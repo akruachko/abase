@@ -4,6 +4,6 @@ import models.entities.{Article, Chapter}
 import org.squeryl.Schema
 
 object DefineScheme extends Schema{
-  val article = table[Article]("article")
-  val chapter = table[Chapter]("chapter")
+  val article = table[Article]
+  val chapter = table[Chapter]
 }
