@@ -6,9 +6,7 @@ case class Chapter(
                     id: String,
                     parentId: Option[String],
                     shortName: String,
-                    fullName: String,
-                    listOfNestedArticles: String,
-                    listOfNestedChapters: String
+                    fullName: String
                   )
 object Chapter{
   implicit val chapter = Json.writes[Chapter]

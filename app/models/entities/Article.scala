@@ -4,7 +4,7 @@ import play.api.libs.json.Json
 
 case class Article (
                      id: String,
-                     parentId: Option[String],
+                     chapterId: String,
                      shortName: String,
                      fullName: String,
                      text: String

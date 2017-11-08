@@ -1,16 +1,15 @@
-# Chapter schema
+# Article schema
 
 # --- !Ups
-CREATE TABLE Chapter(
+CREATE TABLE Article(
   id INT NOT NULL UNIQUE,
-  parentId INT NULL,
-  shortName VARCHAR(100),
+  chapterId INT NULL,
+  shortName VARCHAR(50),
   fullName VARCHAR(200),
-  listOfNestedArticles TEXT,
-  listOfNestedChapters TEXT,
+  text TEXT,
   PRIMARY KEY (id),
-  FOREIGN KEY (parentId) REFERENCES Chapter(id)
+  FOREIGN KEY (chapterId) REFERENCES Chapter(id)
 );
 
 # --- !Downs
-DROP TABLE Chapter;
+DROP TABLE Article;
