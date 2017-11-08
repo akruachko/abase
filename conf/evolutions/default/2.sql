@@ -2,14 +2,14 @@
 
 # --- !Ups
 CREATE TABLE Chapter(
-  idChapter INT NOT NULL UNIQUE,
-  parentIdChapter INT NULL UNIQUE,
-  shortNameChapter VARCHAR(100),
-  fullNameChapter VARCHAR(200),
+  id INT NOT NULL UNIQUE,
+  parentId INT NULL,
+  shortName VARCHAR(100),
+  fullName VARCHAR(200),
   listOfNestedArticles TEXT,
   listOfNestedChapters TEXT,
-  PRIMARY KEY (idChapter),
-  FOREIGN KEY (idChapter) REFERENCES Article(idArticle)
+  PRIMARY KEY (id),
+  FOREIGN KEY (parentId) REFERENCES Chapter(id)
 );
 
 # --- !Downs

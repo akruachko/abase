@@ -1,8 +1,9 @@
 package models.service
 
 trait Service [T]{
-  def entInsert(data: T)
-  def entSelectAll(): Seq[T]
-  def entSelectById(id: String): T
-  def entDelete(id: String)
+  def add(data: T)
+  def list(): Seq[T]
+  def findById(id: String): T
+  def delete(id: String)
+  def update(data: T)
 }

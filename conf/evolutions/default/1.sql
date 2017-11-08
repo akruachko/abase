@@ -2,12 +2,14 @@
 
 # --- !Ups
 CREATE TABLE Article(
-  idArticle INT NOT NULL UNIQUE,
-  parentIdArticle INT NULL UNIQUE,
-  shortNameArticle VARCHAR(50),
-  fullNameArticle VARCHAR(200),
-  textOfArticle TEXT,
-  PRIMARY KEY (idArticle)
+  id INT NOT NULL UNIQUE,
+  chapterId INT NULL,
+  parentId INT NULL,
+  shortName VARCHAR(50),
+  fullName VARCHAR(200),
+  text TEXT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (chapterId) REFERENCES Chapter(id)
 );
 
 # --- !Downs

@@ -3,10 +3,10 @@ package models.entities
 import play.api.libs.json.Json
 
 case class Chapter(
-                    idChapter: String,
-                    parentIdChapter: String,
-                    shortNameChapter: String,
-                    fullNameChapter: String,
+                    id: String,
+                    parentId: Option[String],
+                    shortName: String,
+                    fullName: String,
                     listOfNestedArticles: String,
                     listOfNestedChapters: String
                   )
