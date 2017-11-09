@@ -7,9 +7,13 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq(
-  jdbc,
-  cache,
-  ws,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-)
+                              jdbc,
+                              cache,
+                              ws,
+                              javaJdbc,
+                              evolutions,
+                              "org.liquibase" % "liquibase-core" % "3.5.3",
+                              "org.squeryl" %% "squeryl" % "0.9.5-7",
+                              "org.postgresql" % "postgresql" % "9.3-1102-jdbc4"
+                          )
 
