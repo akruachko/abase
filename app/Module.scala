@@ -1,6 +1,8 @@
 import com.google.inject.AbstractModule
 import java.time.Clock
 
+import org.squeryl.{Session, SessionFactory}
+import org.squeryl.adapters.PostgreSqlAdapter
 import services.{ApplicationTimer, AtomicCounter, Counter}
 
 /**
@@ -23,6 +25,11 @@ class Module extends AbstractModule {
     bind(classOf[ApplicationTimer]).asEagerSingleton()
     // Set AtomicCounter as the implementation for Counter.
     bind(classOf[Counter]).to(classOf[AtomicCounter])
+    SessionFactory.concreteFactory = Some(
+      () => Session.create(
+        java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/abase", "postgres", "L3282"), new PostgreSqlAdapter
+      )
+    )
   }
 
 }

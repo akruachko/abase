@@ -20,12 +20,6 @@ class ArticleServiceImpl @Inject()(db: Database) extends ArticleService {
 
   import models.DefineScheme.article
 
-  SessionFactory.concreteFactory = Some(
-    () => Session.create(
-      db.getConnection(), new PostgreSqlAdapter
-    )
-  )
-
   override def deleteWhere(chapterId: String): Unit = {
     transaction{
       article.deleteWhere(a => a.chapterId === chapterId)

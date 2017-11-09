@@ -15,12 +15,6 @@ trait ChapterService extends Service[Chapter]
 class ChapterServiceImpl @Inject()(db: Database) extends ChapterService {
   import models.DefineScheme.chapter
 
-  SessionFactory.concreteFactory = Some(
-    () => Session.create(
-      db.getConnection(), new PostgreSqlAdapter
-    )
-  )
-
   override def add(data: Chapter): Unit = {
     transaction{
       chapter.insert(data)
