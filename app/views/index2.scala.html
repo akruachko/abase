@@ -1,0 +1,34 @@
+@import models.entities.Chapter
+@import models.entities.Article
+@(articles: Seq[Article], chapters: Seq[Chapter])
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <p>Главы</p>
+  <form action="@routes.HomeController.addNewChapter()" method="post">
+    <input type="text" placeholder="short name">
+    <input type="text" placeholder="full name">
+    <input type="text" placeholder="text">
+    <input type="submit" value="Ok">
+  </form>
+  <p>Cтатьи</p>
+  <form action="@routes.HomeController.addNewArticle()" method="post">
+    <select name="Главы" id="">
+      <option value="0" selected>Нет главы</option>>
+    @for((chapter, i) <- chapters.view.zipWithIndex){
+      <option value="@chapter.id">@{i + 1})&nbsp @chapter.shortName</option>
+    }
+    </select>
+    <br>
+    <input type="text" placeholder="short name">
+    <input type="text" placeholder="full name">
+    <input type="text" placeholder="text">
+    <input type="submit" value="Ok">
+  </form>
+</body>
+</html>

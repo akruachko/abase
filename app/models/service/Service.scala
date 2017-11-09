@@ -5,5 +5,5 @@ trait Service [T]{
   def list(): Seq[T]
   def findById(id: String): T
   def delete(id: String)
-  def update(data: T)
+  def updateEntity(data: T)
 }

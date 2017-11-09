@@ -9,5 +9,5 @@ case class Chapter(
                     fullName: String
                   )
 object Chapter{
-  implicit val chapter = Json.writes[Chapter]
+  implicit val jsonChapter = Json.format[Chapter]
 }
