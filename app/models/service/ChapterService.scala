@@ -4,8 +4,7 @@ import javax.inject.Inject
 
 import com.google.inject.ImplementedBy
 import models.entities.Chapter
-import org.squeryl.adapters.PostgreSqlAdapter
-import org.squeryl.{Session, SessionFactory}
+import org.squeryl.Table
 import play.api.db.Database
 import org.squeryl.PrimitiveTypeMode._
 
@@ -15,21 +14,11 @@ trait ChapterService extends Service[Chapter]
 class ChapterServiceImpl @Inject()(db: Database) extends ChapterService {
   import models.DefineScheme.chapter
 
-  override def add(data: Chapter): Unit = {
-    transaction{
-      chapter.insert(data)
-    }
-  }
-
-  override def list(): Seq[Chapter] = {
-    transaction{
-      from(chapter)(c => select(c)).toList
-    }
-  }
+  override val table: Table[Chapter] = chapter
 
   override def findById(id: String): Chapter = {
     transaction{
-      from(chapter)(c => select(c)).headOption.get
+      from(chapter)(c => where(c.id === id) select c).headOption.get
     }
   }
 
@@ -41,14 +30,7 @@ class ChapterServiceImpl @Inject()(db: Database) extends ChapterService {
 
   override def updateEntity(data: Chapter): Unit = {
     transaction{
-      update(chapter)(c => where(c.id === data.id)
-        set(
-          c.id := data.id,
-          c.parentId := data.parentId,
-          c.shortName := data.shortName,
-          c.fullName := data.fullName
-        )
-      )
+      chapter.update(data)
     }
   }
 }

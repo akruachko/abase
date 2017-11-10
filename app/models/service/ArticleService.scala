@@ -5,7 +5,7 @@ import javax.inject.Inject
 import com.google.inject.ImplementedBy
 import models.entities.Article
 import org.squeryl.adapters.PostgreSqlAdapter
-import org.squeryl.{Session, SessionFactory}
+import org.squeryl.{Session, SessionFactory, Table}
 import play.api.db.Database
 import org.squeryl.PrimitiveTypeMode._
 
@@ -18,25 +18,8 @@ trait ArticleService extends Service[Article]{
 
 class ArticleServiceImpl @Inject()(db: Database) extends ArticleService {
 
-  import models.DefineScheme.article
-
-  override def deleteWhere(chapterId: String): Unit = {
-    transaction{
-      article.deleteWhere(a => a.chapterId === chapterId)
-    }
-  }
-
-  override def add(data: Article): Unit = {
-    transaction{
-      article.insert(data)
-    }
-  }
-
-  override def list(): Seq[Article] = {
-    transaction{
-      from(article)(a => select(a)).toList
-    }
-  }
+  import models.DefineScheme._
+  override val table: Table[Article] = article
 
   override def findById(id: String): Article = {
     transaction{
@@ -50,17 +33,14 @@ class ArticleServiceImpl @Inject()(db: Database) extends ArticleService {
     }
   }
 
+  override def deleteWhere(chapterId: String): Unit = {
+    transaction{
+      article.deleteWhere(a => a.chapterId === chapterId)
+    }
+  }
   override def updateEntity(data: Article): Unit = {
     transaction{
-      update(article)(a => where(a.id === data.id)
-        set(
-            a.id := data.id,
-            a.chapterId := data.chapterId,
-            a.shortName := data.shortName,
-            a.fullName := data.fullName,
-            a.text := data.text
-        )
-      )
+      article.update(data)
     }
   }
 }

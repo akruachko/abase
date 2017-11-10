@@ -46,7 +46,7 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
       Ok
   }
 
-  def isArticleExist(fullName: String): Boolean = {
+  private def isArticleExist(fullName: String): Boolean = {
     val articles = articleService.list()
     articles.exists(_.fullName == fullName)
   }
@@ -80,7 +80,7 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
       Ok
   }
 
-  def isChapterExist(fullName: String): Boolean ={
+  private def isChapterExist(fullName: String): Boolean ={
     val chapters = chapterService.list()
     chapters.exists(_.fullName == fullName)
   }
