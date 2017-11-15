@@ -5,7 +5,7 @@ import play.api.libs.json.Json
 
 case class Chapter(
                     id: String,
-                    parentId: Option[String] = None,
+                    parentId: Option[String],
                     shortName: String,
                     fullName: String
                   ) extends KeyedEntity[String]
