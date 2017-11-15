@@ -1,23 +1,64 @@
-@*
- * This template is called from the `index` template. This template
- * handles the rendering of the page header and body tags. It takes
- * two arguments, a `String` for the title of the page and an `Html`
- * object to insert into the body of the page.
- *@
-@(title: String)(content: Html)
-
+@import template.ViewHelper._
+@import models.entities._
+@(chapters: Seq[Chapter], articles:Seq[Article],data: Article)
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        @* Here's where we render the page title `String`. *@
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-        <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
+        <title></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my.css")">
+        <script src="@routes.Assets.versioned("javascripts/jquery-3.2.1.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootstrap.js")" type="text/javascript"></script>
     </head>
     <body>
-        @* And here's where we render the `Html` object containing
-         * the page content. *@
-        @content
+        <div class="container">
+            <div class="start-container">
+                <div class="row">
+                    <a class="btn btn-default" role="button" href="@routes.HomeController.index()">Back</a>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editArticle">
+                        Edit article
+                    </button>
+                </div>
+                <div class="row">
+                    @getSomeArticle(data, chapters)
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Adding article</h4>
+                    </div>
+                    <form method="post" action="/updateArticle">
+                        <div class="modal-body">
+                            <input class="display-none" name="id" value="@data.id">
+                            <div class="form-group">
+                                <label for="">Choose chapter</label>
+                                <select class="form-control" name="chapterId">@for(chap <- chapters){
+                                    @if(chap.parentId.nonEmpty){<option value="@chap.id">@chap.shortName</option>}}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="shortName">Enter short article's name</label>
+                                <input type="text" class="form-control" name="shortName" id="shortName" placeholder="Short name"value="@data.shortName">
+                            </div>
+                            <div class="form-group">
+                                <label for="fullName">Enter full article's name</label>
+                                <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full name" value="@data.fullName">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="text" class="form-control" rows="4" placeholder="Enter text of article">@data.text</textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

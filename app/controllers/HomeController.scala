@@ -8,18 +8,21 @@ import models.service.{ArticleService, ChapterService}
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import play.api.data.format.Formats._
 import play.api.libs.json.Json
-
+import models.load.LoadInitialDataService
 @Singleton
-class HomeController @Inject()(articleService: ArticleService, chapterService: ChapterService) extends Controller
+class HomeController @Inject()(articleService: ArticleService, chapterService: ChapterService, loadService: LoadInitialDataService) extends Controller
 {
-  def index = Action {
-    Ok(views.html.index2(articleService.list(), chapterService.list()))
+  def index() = Action {
+    val art = articleService.list()
+    val chap = chapterService.list()
+    Ok(views.html.index2(art, chap,hierarchical()))
   }
-//  def index = Action {
-//    Ok(views.html.index("Hi"))
-//  }
+
+  def article(id: String) = Action{
+    Ok(views.html.main(chapterService.list(), articleService.list(),articleService.findById(id)))
+  }
+
   val addArticle = Form(
     mapping(
       "id" -> text,
@@ -42,8 +45,11 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
   def addNewArticle() = Action{
     implicit request =>
       val article = addArticle.bindFromRequest().get.copy(id = IdGenerator.randomId)
-      articleService.add(article)
-      Ok
+      if(!isArticleExist(article.fullName)){
+        articleService.add(article)
+      }
+      Redirect(routes.HomeController.index())
+
   }
 
   private def isArticleExist(fullName: String): Boolean = {
@@ -63,21 +69,38 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
     implicit request =>
       val article = addArticle.bindFromRequest().get
       articleService.updateEntity(article)
-      Ok
+      Redirect(routes.HomeController.article(article.id))
   }
 
   def removeArticle(id: String) = Action
   {
     implicit request =>
       articleService.delete(id)
+      Redirect(routes.HomeController.index())
       Ok
   }
 
   def addNewChapter() = Action{
     implicit request =>
       val chapter = addChapter.bindFromRequest().get.copy(id = IdGenerator.randomId)
-      chapterService.add(chapter)
-      Ok
+      if(!isChapterExist(chapter.fullName)){
+        chapterService.add(chapter)
+      }
+        Redirect(routes.HomeController.index())
+  }
+  def hierarchical(): Seq[Chapter] ={
+    val chapters = chapterService.list()
+    def child(chap: Chapter): Seq[Chapter] = {
+      chap +: chapters.filter(_.parentId.contains(chap.id)).flatMap(child)
+    }
+    chapters.flatMap(
+      chap =>
+        if(chap.parentId.isEmpty) {
+          child(chap)
+        }else{
+          Seq.empty
+        }
+    )
   }
 
   private def isChapterExist(fullName: String): Boolean ={
@@ -97,13 +120,19 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
     implicit request =>
       val chapter = addChapter.bindFromRequest().get
       chapterService.updateEntity(chapter)
-      Ok
+      Redirect(routes.HomeController.index())
   }
 
   def removeChapter(id: String) = Action{
     implicit request =>
       articleService.deleteWhere(id)
       chapterService.delete(id)
+      Redirect(routes.HomeController.index())
       Ok
+  }
+  def setDB() = Action {
+    implicit request =>
+      loadService.loadDBwithXML
+      Redirect(routes.HomeController.index())
   }
 }

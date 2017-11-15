@@ -1,0 +1,12 @@
+.start-container{
+    padding-top: 50px;
+}
+.txt-area-width{
+    width: 100%;
+}
+.display-none{
+    display: none;
+}
+.without-numbering{
+  list-style-type: none;
+}
