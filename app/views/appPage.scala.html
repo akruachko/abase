@@ -28,8 +28,7 @@
           </button>
         </div>
         <div class="row start-container">  @if(chapters.nonEmpty){
-          <ol>@cascadTable(chaptersCategory, articles)
-          </ol> }
+          @cascadTable(chaptersCategory, articles) }
         </div>
       </div>
     </div>
@@ -82,8 +81,7 @@
               <div class="form-group">
                 <label for="">Choose chapter</label>
                 <select class="form-control" name="chapterId">@for(chap <- chaptersCategory){
-                  @if(chap.parentId.nonEmpty){
-                    <option value="@chap.id">@chap.shortName</option>}}
+                   <option value="@chap.id">@chap.shortName</option>}
                 </select>
               </div>
               <div class="form-group">
@@ -126,9 +124,8 @@
                 <select class="form-control" name="parentId">
                   <option value="@None" selected>Нет</option>
                 @for(chap <- chaptersCategory){
-                  @if(chap.parentId.isEmpty){
                     <option value="@chap.id">@chap.shortName</option>}
-                  }
+
                 </select>
               </div>
               <div class="form-group">

@@ -23,6 +23,9 @@ POST /updateChapter          controllers.HomeController.updateChapter
 GET /assets/*file           controllers.Assets.versioned(path="/public", file: Asset)
 
 GET /article/:id              controllers.HomeController.article(id: String)
+
+GET /chapter/:id               controllers.HomeController.chapter(id: String)
+
 GET /setDB                  controllers.HomeController.setDB()
 
 

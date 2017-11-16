@@ -14,13 +14,14 @@ import models.load.LoadInitialDataService
 class HomeController @Inject()(articleService: ArticleService, chapterService: ChapterService, loadService: LoadInitialDataService) extends Controller
 {
   def index() = Action {
-    val art = articleService.list()
-    val chap = chapterService.list()
-    Ok(views.html.index2(art, chap,hierarchical()))
+    Ok(views.html.appPage(articleService.list(), chapterService.list(),hierarchical()))
   }
 
   def article(id: String) = Action{
-    Ok(views.html.main(chapterService.list(), articleService.list(),articleService.findById(id)))
+    Ok(views.html.articlePage(chapterService.list(), articleService.list(),articleService.findById(id)))
+  }
+  def chapter(id: String) = Action{
+    Ok(views.html.chapterPage(chapterService.list(), id))
   }
 
   val addArticle = Form(
@@ -77,7 +78,6 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
     implicit request =>
       articleService.delete(id)
       Redirect(routes.HomeController.index())
-      Ok
   }
 
   def addNewChapter() = Action{
@@ -128,7 +128,6 @@ class HomeController @Inject()(articleService: ArticleService, chapterService: C
       articleService.deleteWhere(id)
       chapterService.delete(id)
       Redirect(routes.HomeController.index())
-      Ok
   }
   def setDB() = Action {
     implicit request =>

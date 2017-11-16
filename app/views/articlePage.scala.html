@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label for="">Choose chapter</label>
                                 <select class="form-control" name="chapterId">@for(chap <- chapters){
-                                    @if(chap.parentId.nonEmpty){<option value="@chap.id">@chap.shortName</option>}}
+                                    <option value="@chap.id">@chap.shortName</option>}
                                 </select>
                             </div>
                             <div class="form-group">
