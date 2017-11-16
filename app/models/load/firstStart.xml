@@ -1,0 +1,101 @@
+<DB>
+    <AllArticle>
+        <Article>
+            <id>1</id>
+            <chapterId>5</chapterId>
+            <shortName>Статья 1</shortName>
+            <fullName>Полное имя статьи 1</fullName>
+            <text>Статья о чем-то</text>
+        </Article>
+        <Article>
+            <id>2</id>
+            <chapterId>2</chapterId>
+            <shortName>Статья 2</shortName>
+            <fullName>Полное имя статьи 2</fullName>
+            <text>Здесь должна быть ваша реклама</text>
+        </Article>
+        <Article>
+            <id>3</id>
+            <chapterId>3</chapterId>
+            <shortName>Статья 3</shortName>
+            <fullName>Полное имя статьи 3</fullName>
+            <text>Что-то там в статье должно быть</text>
+        </Article>
+        <Article>
+            <id>4</id>
+            <chapterId>3</chapterId>
+            <shortName>Статья 4</shortName>
+            <fullName>Полное имя статьи 4</fullName>
+            <text>Небольшие сомнения насчет третьего сезона Рика и Морти</text>
+        </Article>
+        <Article>
+            <id>5</id>
+            <chapterId>8</chapterId>
+            <shortName>Статья 5</shortName>
+            <fullName>Полное имя статьи 5</fullName>
+            <text>Предыдущие сезоны Рика и Морти ничего такие в отличии от третьего</text>
+        </Article>
+    </AllArticle>
+    <AllChapter>
+        <Chapter>
+            <id>1</id>
+            <parentId></parentId>
+            <shortName>Глава 1</shortName>
+            <fullName>Полное имя главы 1</fullName>
+        </Chapter>
+        <Chapter>
+            <id>2</id>
+            <parentId>1</parentId>
+            <shortName>Глава 2</shortName>
+            <fullName>Полное имя главы 2</fullName>
+        </Chapter>
+        <Chapter>
+            <id>3</id>
+            <parentId>1</parentId>
+            <shortName>Глава 3</shortName>
+            <fullName>Полное имя главы 3</fullName>
+        </Chapter>
+        <Chapter>
+            <id>4</id>
+            <parentId></parentId>
+            <shortName>Глава 4</shortName>
+            <fullName>Полное имя главы 4</fullName>
+        </Chapter>
+        <Chapter>
+            <id>5</id>
+            <parentId>4</parentId>
+            <shortName>Глава 5</shortName>
+            <fullName>Полное имя главы 5</fullName>
+        </Chapter>
+        <Chapter>
+            <id>6</id>
+            <parentId></parentId>
+            <shortName>Глава 6</shortName>
+            <fullName>Полное имя главы 6</fullName>
+        </Chapter>
+        <Chapter>
+            <id>7</id>
+            <parentId>6</parentId>
+            <shortName>Глава 7</shortName>
+            <fullName>Полное имя главы 7</fullName>
+        </Chapter>
+        <Chapter>
+            <id>8</id>
+            <parentId>1</parentId>
+            <shortName>Глава 8</shortName>
+            <fullName>Полное имя главы 7</fullName>
+        </Chapter>
+        <Chapter>
+            <id>9</id>
+            <parentId>1</parentId>
+            <shortName>Глава 9</shortName>
+            <fullName>Полное имя главы 7</fullName>
+        </Chapter>
+        <Chapter>
+            <id>10</id>
+            <parentId>1</parentId>
+            <shortName>Глава 10</shortName>
+            <fullName>Полное имя главы 7</fullName>
+        </Chapter>
+    </AllChapter>
+</DB>

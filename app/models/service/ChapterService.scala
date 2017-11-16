@@ -9,7 +9,9 @@ import play.api.db.Database
 import org.squeryl.PrimitiveTypeMode._
 
 @ImplementedBy(classOf[ChapterServiceImpl])
-trait ChapterService extends Service[Chapter]
+trait ChapterService extends Service[Chapter]{
+  def deleteWhere(id: String)
+}
 
 class ChapterServiceImpl @Inject()(db: Database) extends ChapterService {
   import models.DefineScheme.chapter
@@ -31,6 +33,12 @@ class ChapterServiceImpl @Inject()(db: Database) extends ChapterService {
   override def updateEntity(data: Chapter): Unit = {
     transaction{
       chapter.update(data)
+    }
+  }
+
+  override def deleteWhere(id: String): Unit = {
+    transaction{
+      chapter.deleteWhere(a => a.id === id)
     }
   }
 }

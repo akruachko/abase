@@ -1,0 +1,149 @@
+@import models.entities.Chapter
+@import models.entities.Article
+@import template.ViewHelper._
+@(articles: Seq[Article], chapters: Seq[Chapter], chaptersCategory: Seq[Chapter])
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Article Base</title>
+    <link rel="stylesheet" href="@routes.Assets.versioned("""stylesheets/bootstrap.css""")">
+    <link rel="stylesheet" href="@routes.Assets.versioned("""stylesheets/my.css""")">
+    <script src="@routes.Assets.versioned("""javascripts/jquery-3.2.1.js""")"></script>
+    <script src="@routes.Assets.versioned("""javascripts/bootstrap.js""")"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="start-container">
+        <div class="row">
+          <a class="btn btn-default" href="/setDB" role="button">Load database</a>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addChapter">
+            Add chapter
+          </button>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addArticle">
+            Add article
+          </button>
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editChapter">
+            Edit chapter
+          </button>
+        </div>
+        <div class="row start-container">  @if(chapters.nonEmpty){
+          @cascadTable(chaptersCategory, articles) }
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addChapter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Adding chapter</h4>
+          </div>
+          <form method="post" action="/addNewChapter">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="">Choose chapter</label>
+                <select class="form-control" name="parentId">
+                  <option value="@None" selected>Нет</option>
+                  @for(chap <- chaptersCategory){
+                    @if(chap.parentId.isEmpty){
+                  <option value="@chap.id">@chap.shortName</option>}}
+                </select>
+              </div>
+              <input class="display-none" name="id">
+              <div class="form-group">
+                <label for="shortName">Enter short chapter's name</label>
+                <input type="text" class="form-control" name="shortName" id="shortName" placeholder="Short name">
+              </div>
+              <div class="form-group">
+                <label for="fullName">Enter full chapter's name</label>
+                <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full name">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addArticle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Adding article</h4>
+          </div>
+          <form method="post" action="/addNewArticle">
+            <div class="modal-body">
+              <input class="display-none" name="id">
+              <div class="form-group">
+                <label for="">Choose chapter</label>
+                <select class="form-control" name="chapterId">@for(chap <- chaptersCategory){
+                   <option value="@chap.id">@chap.shortName</option>}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="shortName">Enter short article's name</label>
+                <input type="text" class="form-control" name="shortName" id="shortName" placeholder="Short name">
+              </div>
+              <div class="form-group">
+                <label for="fullName">Enter full article's name</label>
+                <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full name">
+              </div>
+              <div class="form-group">
+                <textarea name="text" class="form-control" rows="4" placeholder="Enter text of article"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="editChapter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Edit chapter</h4>
+          </div>
+          <form method="post" action="/updateChapter">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="">Editable chapter</label>
+                <select class="form-control" name="id">@for(chap <- chaptersCategory){
+                   <option value="@chap.id">@chap.shortName</option>}
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="">Add to chapter</label>
+                <select class="form-control" name="parentId">
+                  <option value="@None" selected>Нет</option>
+                @for(chap <- chaptersCategory){
+                    <option value="@chap.id">@chap.shortName</option>}
+
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="shortName">Enter short chapter's name</label>
+                <input type="text" class="form-control" name="shortName" id="shortName" placeholder="Short name">
+              </div>
+              <div class="form-group">
+                <label for="fullName">Enter full chapter's name</label>
+                <input type="text" class="form-control" name="fullName" id="fullName" placeholder="Full name">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Edit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

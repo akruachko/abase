@@ -1,0 +1,25 @@
+@import template.ViewHelper._
+@import models.entities._
+@(chapters: Seq[Chapter],id: String)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/my.css")">
+        <script src="@routes.Assets.versioned("javascripts/jquery-3.2.1.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/bootstrap.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="start-container">
+                <div class="row">
+                    <a class="btn btn-default" role="button" href="@routes.HomeController.index()">Back</a>
+                </div>
+                <div class="row">
+                    @pathChapter(id, chapters)
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,5 +1,5 @@
-import com.google.inject.AbstractModule
 
+import com.google.inject.AbstractModule
 import org.squeryl.{Session, SessionFactory}
 import org.squeryl.adapters.PostgreSqlAdapter
 
@@ -14,7 +14,6 @@ import org.squeryl.adapters.PostgreSqlAdapter
  * configuration file.
  */
 class SessionStartModule extends AbstractModule {
-
   override def configure() = {
     SessionFactory.concreteFactory = Some(
       () => Session.create(
